@@ -11,21 +11,22 @@ export const Form = () => {
 
     return (
         <Box>
-            <Heading as="h2" size="lg" pb="20px">Skjema :)</Heading>
+            <Heading as="h2" size="lg" pb="20px">Søknad om tilgang til DSA</Heading>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing="3vh">
-                    <FormInput register={register("fornavn")} iType="text" label="Fornavn">
+                    <FormInput register={register("fornavn")} iType="text" label="Fornavn" isRequired>
                         Skriv inn ditt fornavn
                     </FormInput>
-                    <FormInput register={register("etternavn")} iType="text" label="Etternavn">
+                    <FormInput register={register("etternavn")} iType="text" label="Etternavn" isRequired>
                         Skriv inn ditt etternavn
                     </FormInput>
-                    <FormInput register={register("foedselsnummer")} iType="text" label="Fødselsnummer">
+                    <FormInput register={register("foedselsnummer")} iType="number" label="Fødselsnummer" iPattern="\d{11}" isRequired>
                         Skriv inn ditt fødselsnummer
                     </FormInput>
                     <FormLabel>Velg hvor mange år du vil ha tilgang</FormLabel>
                     <Select
                     aria-label="select"
+                    isRequired
                     {...register("aar")}>
                         <option value="1">1 år</option>
                         <option value="2">2 år</option>
@@ -33,7 +34,7 @@ export const Form = () => {
                         <option value="4">4 år</option>
                         <option value="5">5 år</option>
                     </Select>
-                    <FormInput register={register("email")} iType="text" label="Email">
+                    <FormInput register={register("email")} iType="email" label="Email">
                         Skriv inn din epostadresse
                     </FormInput>
                     <Box display="flex">
