@@ -7,6 +7,18 @@ export const Form = () => {
 
     const onSubmit = (data) => {
         console.log(data);
+        const jsonData = JSON.stringify(data)
+        console.log(jsonData);
+        console.log(data.fornavn);
+
+        //lag kallet
+        fetch('http://localhost:8443/api', {
+            method: "POST",
+            body: jsonData,
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
     }
 
     return (
@@ -34,7 +46,7 @@ export const Form = () => {
                         <option value="4">4 år</option>
                         <option value="5">5 år</option>
                     </Select>
-                    <FormInput register={register("email")} iType="email" label="Email">
+                    <FormInput register={register("email")} iType="email" label="Email" isRequired>
                         Skriv inn din epostadresse
                     </FormInput>
                     <Box display="flex">
