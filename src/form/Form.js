@@ -1,24 +1,38 @@
-import {Button, Box, Heading, Spacer, Stack, Select, FormLabel} from "@kvib/react";
+import {Button, Box, Heading, Spacer, Stack, Select, FormLabel, useToast} from "@kvib/react";
 import {useForm} from "react-hook-form";
 import {FormInput} from "./FormInput";
 
 export const Form = () => {
     const { register, handleSubmit } = useForm()
+    const toast = useToast()
 
     const onSubmit = (data) => {
-        console.log(data);
         const jsonData = JSON.stringify(data)
         console.log(jsonData);
-        console.log(data.fornavn);
 
         //lag kallet
-        fetch('http://localhost:8443/api', {
+        fetch('http://localhost:8080/api', {
             method: "POST",
-            body: jsonData,
             headers: {
                 "Content-type": "application/json"
-            }
+            },
+            body: jsonData
         })
+            .then(response => {
+                if (!response.ok) {
+                    toast({
+                        title: "HTTP error!",
+                        description: "status: " + response.status,
+                        status: "error"
+                    })
+                    throw new Error('Response was not ok')
+                }
+                toast({
+                    title: "Skjema sendt inn!",
+                    description: "Brukeren er registrert i systemet",
+                    status: "success"
+                })
+            })
     }
 
     return (
@@ -32,7 +46,9 @@ export const Form = () => {
                     <FormInput register={register("etternavn")} iType="text" label="Etternavn" isRequired>
                         Skriv inn ditt etternavn
                     </FormInput>
-                    <FormInput register={register("foedselsnummer")} iType="number" label="Fødselsnummer" iPattern="\d{11}" isRequired>
+
+                    //minimum er det lavest 11 siffer tallet, og maxim er det høyeste 11 siffer tallet
+                    <FormInput register={register("foedselsnummer")} iType="number" label="Fødselsnummer" iMin="9999999999" iMax="99999999999" isRequired>
                         Skriv inn ditt fødselsnummer
                     </FormInput>
                     <FormLabel>Velg hvor mange år du vil ha tilgang</FormLabel>
