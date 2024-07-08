@@ -40,7 +40,7 @@ export const BrukerTable = () => {
                     <Card variant="elevated" p="1rem" w="90%" m="1rem">
                         <TableContainer>
                             <Table variant="striped" colorScheme="green" size="sm">
-                                <TableCaption>Info om din registrering i DSA</TableCaption>
+                                <TableCaption>Info om {bruker.fornavn} {bruker.etternavn} sin registreringsforespørsel til DSA</TableCaption>
                                 <Thead>
                                     <Tr>
                                         <Th>Felt</Th>
